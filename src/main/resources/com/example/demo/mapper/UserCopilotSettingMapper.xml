@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.UserCopilotSettingMapper">
+
+    <select id="findAll" resultType="com.example.demo.entity.UserCopilotSetting">
+        SELECT * FROM user_copilot_setting
+    </select>
+
+    <select id="findById"
+        parameterType="int"
+        resultType="com.example.demo.entity.UserCopilotSetting">
+        SELECT * FROM user_copilot_setting WHERE id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_copilot_setting (
+            user_name, git_login_id, git_login_password, teams_workflow_url, remarks
+        ) VALUES (
+            #{userName}, #{gitLoginId}, #{gitLoginPassword}, #{teamsWorkflowUrl}, #{remarks}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE user_copilot_setting
+        SET
+            user_name = #{userName},
+            git_login_id = #{gitLoginId},
+            git_login_password = #{gitLoginPassword},
+            teams_workflow_url = #{teamsWorkflowUrl},
+            remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM user_copilot_setting WHERE id = #{id}
+    </delete>
+
+</mapper>

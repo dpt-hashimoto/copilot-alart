@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Github設定</title>
+    </head>
+    <body>
+        <button type="button" onclick="location.href='/regist'">新規作成</button>
+        <table border="1" style="border-color: pink;">
+            <tr>
+                <th>ID</th>
+                <th>ユーザ名</th>
+                <th>備考</th>
+            </tr>
+            <tr th:each="info: ${settings}">
+                <td th:text="${info.id}"></td>
+                <td>
+                    <a th:href="@{/setting/{id}(id=${info.id})}"
+                       th:text="${info.userName}"></a>
+                </td>
+                <td th:text="${info.remarks}"></td>
+            </tr>
+        </table>
+    </body>
+</html>

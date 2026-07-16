@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>設定入力</title>
+    </head>
+    <body>
+        <h1 th:text="${setting.id == null} ? '新規登録' : '編集'"></h1>
+        <form th:action="@{/save}" th:object="${setting}" method="post">
+            <!-- 更新時のみIDを送信 -->
+            <input type="hidden" th:field="*{id}">
+
+            <div>
+                <label>ユーザー名</label><br>
+                <input type="text" th:field="*{userName}">
+            </div>
+
+            <br>
+
+            <div>
+                <label>GitHubログインID</label><br>
+                <input type="text" th:field="*{gitLoginId}">
+            </div>
+
+            <br>
+
+            <div>
+                <label>GitHubログインパスワード</label><br>
+                <input type="text" th:field="*{gitLoginPassword}">
+            </div>
+
+            <br>
+
+            <div>
+                <label>TeamsワークフローURL</label><br>
+                <textarea th:field="*{teamsWorkflowUrl}" rows="2" cols="60"></textarea>
+            </div>
+
+            <br>
+
+            <div>
+                <label>備考</label><br>
+                <textarea th:field="*{remarks}" rows="4" cols="60"></textarea>
+            </div>
+
+            <br>
+
+            <button type="submit">保存</button>
+            <button type="button" onclick="history.back()">戻る</button>
+        </form>
+    </body>
+</html>

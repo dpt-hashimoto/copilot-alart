@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>詳細画面</title>
+    </head>
+    <body>
+        <h1>設定情報</h1>
+
+        <div>
+            <label>ユーザー名</label><br>
+            <div th:text="${setting.userName}"></div>
+        </div>
+
+        <br>
+
+        <div>
+            <label>GitHubログインID</label><br>
+            <div th:text="${setting.gitLoginId}"></div>
+        </div>
+
+        <br>
+
+        <div>
+            <label>GitHubログインパスワード</label><br>
+            <div th:text="${setting.gitLoginPassword}"></div>
+        </div>
+
+        <br>
+
+        <div>
+            <label>TeamsワークフローURL</label><br>
+            <div th:text="${setting.teamsWorkflowUrl}"
+                 style="white-space: pre-wrap; word-break: break-all;">
+            </div>
+        </div>
+
+        <br>
+
+        <div>
+            <label>備考</label><br>
+            <div th:text="${setting.remarks}"
+                 style="white-space: pre-wrap;"></div>
+        </div>
+
+        <br>
+
+        <button type="button"
+                th:onclick="|location.href='/update/${setting.id}'|">
+            編集
+        </button>
+        <button type="button" onclick="history.back()">
+            戻る
+        </button>
+
+        <form th:action="@{/delete/{id}(id=${setting.id})}" method="post">
+            <button type="submit">削除</button>
+        </form>
+    </body>
+</html>
