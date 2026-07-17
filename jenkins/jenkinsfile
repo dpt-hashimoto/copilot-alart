@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+    tools {
+        maven 'Maven3.9.16'
+        jdk 'java17'
+    }
+
+    stages {
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()
+            }
+        }
+        stage('Build') {
+            steps {
+                // Get some code from a GitHub repository
+                git branch: 'main',
+                url: 'https://github.com/dpt-hashimoto/copilot-alart.git'
+
+                // Run the build on a Unix agent. You must have Maven installed.
+                // sh 'mvn -Dmaven.test.failure.ignore=true clean package'
+
+                // To run Maven on a Windows agent, use
+                bat 'mvn clean package'
+                bat 'mvn -Dmaven.test.failure.ignore=true clean package'
+            }
+
+            post {
+                // If Maven was able to run the tests, even if some of the test
+                // failed, record the test results and archive the jar file.
+                success {
+                    archiveArtifacts 'target/*.jar'
+                }
+            }
+        }
+    }
+}
