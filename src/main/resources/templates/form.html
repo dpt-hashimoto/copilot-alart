@@ -3,50 +3,65 @@
     <head>
         <meta charset="UTF-8">
         <title>設定入力</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+            rel="stylesheet">
     </head>
     <body>
-        <h1 th:text="${setting.id == null} ? '新規登録' : '編集'"></h1>
-        <form th:action="@{/save}" th:object="${setting}" method="post">
-            <!-- 更新時のみIDを送信 -->
-            <input type="hidden" th:field="*{id}">
-
-            <div>
-                <label>ユーザー名</label><br>
-                <input type="text" th:field="*{userName}">
+        <div class="container mt-5">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"
+                        th:text="${setting.id == null} ? '新規登録' : '編集'">
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/save}" th:object="${setting}" method="post">
+                        <input type="hidden" th:field="*{id}">
+    
+                        <div class="mb-3">
+                            <label class="form-label">ユーザー名</label>
+                            <input type="text" class="form-control" th:field="*{userName}">
+                        </div>
+    
+                        <div class="mb-3">
+                            <label class="form-label">GitHubログインID</label>
+                            <input type="text" class="form-control" th:field="*{gitLoginId}">
+                        </div>
+    
+                        <div class="mb-3">
+                            <label class="form-label">GitHubログインパスワード</label>
+                            <input type="password" class="form-control" th:field="*{gitLoginPassword}">
+                        </div>
+    
+                        <div class="mb-3">
+                            <label class="form-label">メールアドレス</label>
+                            <textarea class="form-control"
+                                      th:field="*{mailAddress}"
+                                      rows="2"></textarea>
+                        </div>
+    
+                        <div class="mb-3">
+                            <label class="form-label">備考</label>
+                            <textarea class="form-control"
+                                      th:field="*{remarks}"
+                                      rows="4"></textarea>
+                        </div>
+    
+                        <div class="d-flex gap-2 justify-content-end">
+                            <button type="submit" class="btn btn-success">
+                                保存
+                            </button>
+    
+                            <button type="button"
+                                    class="btn btn-secondary"
+                                    onclick="history.back()">
+                                戻る
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-
-            <br>
-
-            <div>
-                <label>GitHubログインID</label><br>
-                <input type="text" th:field="*{gitLoginId}">
-            </div>
-
-            <br>
-
-            <div>
-                <label>GitHubログインパスワード</label><br>
-                <input type="text" th:field="*{gitLoginPassword}">
-            </div>
-
-            <br>
-
-            <div>
-                <label>TeamsワークフローURL</label><br>
-                <textarea th:field="*{teamsWorkflowUrl}" rows="2" cols="60"></textarea>
-            </div>
-
-            <br>
-
-            <div>
-                <label>備考</label><br>
-                <textarea th:field="*{remarks}" rows="4" cols="60"></textarea>
-            </div>
-
-            <br>
-
-            <button type="submit">保存</button>
-            <button type="button" onclick="history.back()">戻る</button>
-        </form>
+        </div>
     </body>
 </html>

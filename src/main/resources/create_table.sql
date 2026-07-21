@@ -7,7 +7,7 @@ CREATE TABLE user_copilot_setting (
     user_name VARCHAR(100) NOT NULL COMMENT 'ユーザー名',
     git_login_id VARCHAR(150) NOT NULL UNIQUE COMMENT 'GitHubログインID（重複不可）',
     git_login_password VARCHAR(512) NOT NULL COMMENT 'GitHubログインパスワード（暗号化文字を想定）',
-    teams_workflow_url TEXT NOT NULL COMMENT 'TeamsのワークフローURL',
+    mail_address TEXT NOT NULL COMMENT 'メールアドレス',
     remarks TEXT COMMENT '備考',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'データ作成日時',
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'データ更新日時'
@@ -18,27 +18,27 @@ INSERT INTO user_copilot_setting (
     user_name, 
     git_login_id, 
     git_login_password, 
-    teams_workflow_url, 
+    mail_address, 
     remarks
 ) VALUES 
 (
     '山田 太郎', 
     'yamada-github-dev', 
     '$2a$10$vXfR7O8kH...dummyencryptedpassword1...', -- 暗号化文字列を想定したダミー
-    'https://azure.com', 
+    'yamada@tarou.com', 
     '開発環境用のテストアカウントです。週次で通知を受け取ります。'
 ),
 (
     '佐藤 美咲', 
     'sato-git-ops', 
     '$2a$10$9zPqK2lM...dummyencryptedpassword2...', 
-    'https://azure.com', 
+    'satou@misaki.com', 
     '本番環境のリリース監視用連携設定。'
 ),
 (
     '鈴木 健二', 
     'suzuki-github-admin', 
     '$2a$10$AbCdEf12...dummyencryptedpassword3...', 
-    'https://azure.com', 
+    'suzuki@kenji.com', 
     NULL -- 備考が空（NULL）パターンのテスト用
 );

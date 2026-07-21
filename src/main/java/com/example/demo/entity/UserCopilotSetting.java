@@ -16,8 +16,8 @@ public class UserCopilotSetting {
     private String gitLoginId;
     /** GitHubログインパスワード（暗号化文字を想定） */
     private String gitLoginPassword;
-    /** TeamsのワークフローURL */
-    private String teamsWorkflowUrl;
+    /** メールアドレス */
+    private String mailAddress;
     /** 備考 */
     private String remarks;
 }

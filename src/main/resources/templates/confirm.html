@@ -3,58 +3,81 @@
     <head>
         <meta charset="UTF-8">
         <title>詳細画面</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+            rel="stylesheet">
     </head>
     <body>
-        <h1>設定情報</h1>
+        <div class="container mt-5">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">設定情報</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered align-middle">
+                        <tbody>
+                            <tr>
+                                <th class="table-light" style="width: 220px;">ユーザー名</th>
+                                <td th:text="${setting.userName}"></td>
+                            </tr>
+                            <tr>
+                                <th class="table-light">GitHubログインID</th>
+                                <td th:text="${setting.gitLoginId}"></td>
+                            </tr>
+                            <tr>
+                                <th class="table-light">GitHubログインパスワード</th>
+                                <td th:text="${setting.gitLoginPassword}"></td>
+                            </tr>
+                            <tr>
+                                <th class="table-light">メールアドレス</th>
+                                <td style="white-space: pre-wrap; word-break: break-all;"
+                                    th:text="${setting.mailAddress}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="table-light">備考</th>
+                                <td style="white-space: pre-wrap;"
+                                    th:text="${setting.remarks}">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between align-items-center">
 
-        <div>
-            <label>ユーザー名</label><br>
-            <div th:text="${setting.userName}"></div>
-        </div>
+                        <button type="button"
+                                class="btn btn-success"
+                                th:onclick="|location.href='/execute/${setting.id}'|">
+                            手動実行
+                        </button>
 
-        <br>
+                        <div class="d-flex gap-2">
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    th:onclick="|location.href='/update/${setting.id}'|">
+                                編集
+                            </button>
 
-        <div>
-            <label>GitHubログインID</label><br>
-            <div th:text="${setting.gitLoginId}"></div>
-        </div>
+                            <button type="button"
+                                    class="btn btn-secondary"
+                                    onclick="history.back()">
+                                戻る
+                            </button>
 
-        <br>
+                            <form th:action="@{/delete/{id}(id=${setting.id})}"
+                                  method="post"
+                                  class="m-0">
+                                <button type="submit"
+                                        class="btn btn-danger"
+                                        onclick="return confirm('この設定を削除しますか？');">
+                                    削除
+                                </button>
+                            </form>
+                        </div>
 
-        <div>
-            <label>GitHubログインパスワード</label><br>
-            <div th:text="${setting.gitLoginPassword}"></div>
-        </div>
-
-        <br>
-
-        <div>
-            <label>TeamsワークフローURL</label><br>
-            <div th:text="${setting.teamsWorkflowUrl}"
-                 style="white-space: pre-wrap; word-break: break-all;">
+                    </div>
+                </div>
             </div>
         </div>
-
-        <br>
-
-        <div>
-            <label>備考</label><br>
-            <div th:text="${setting.remarks}"
-                 style="white-space: pre-wrap;"></div>
-        </div>
-
-        <br>
-
-        <button type="button"
-                th:onclick="|location.href='/update/${setting.id}'|">
-            編集
-        </button>
-        <button type="button" onclick="history.back()">
-            戻る
-        </button>
-
-        <form th:action="@{/delete/{id}(id=${setting.id})}" method="post">
-            <button type="submit">削除</button>
-        </form>
     </body>
+
 </html>
