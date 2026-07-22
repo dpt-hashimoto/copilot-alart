@@ -2,6 +2,9 @@ package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.selenium.CopilotUsageDto;
+import com.example.demo.selenium.WebScrapingService;
+
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -11,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ExecuteService {
 
+    /** WEBスクレイピングサービス */
+    private final WebScrapingService scraper;
     /** メール送信サービス */
     private final MailService mailer;
 
@@ -20,6 +25,7 @@ public class ExecuteService {
      * @return エンティティDTO
      */
     public void manualExecute(Integer id) {
-        mailer.sendMail(id);
+        CopilotUsageDto dto = scraper.execute(id);
+        mailer.sendMail(id, dto);
     }
 }

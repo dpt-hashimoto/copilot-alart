@@ -5,5 +5,5 @@ GitHub Copilot利用状況
 
 取得日時：[[${dateTime}]]
 
-コード補完：[[${inline}]]％
-Credit：[[${credit}]]％
+Inline：[[${inline}]]
+Credit：[[${credit}]]

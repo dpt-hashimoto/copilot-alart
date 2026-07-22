@@ -22,6 +22,13 @@ INSERT INTO user_copilot_setting (
     remarks
 ) VALUES 
 (
+    '橋本 可成 ', 
+    'dpt-hashimoto', 
+    'e02022e02022', 
+    'hashitmo@test.com', 
+    '橋本個人アカウント GitHub疎通確認済み'
+),
+(
     '山田 太郎', 
     'yamada-github-dev', 
     '$2a$10$vXfR7O8kH...dummyencryptedpassword1...', -- 暗号化文字列を想定したダミー

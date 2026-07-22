@@ -11,6 +11,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import com.example.demo.entity.UserCopilotSetting;
 import com.example.demo.mapper.UserCopilotSettingMapper;
+import com.example.demo.selenium.CopilotUsageDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,23 +33,19 @@ public class MailService {
      * DBからメールアドレスを取得しメールを送信する
      * @param id
      */
-    public void sendMail(Integer id) {
+    public void sendMail(Integer id, CopilotUsageDto dto) {
         UserCopilotSetting setting = getEntity(id);
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(getAddress(setting));
-        message.setSubject("テストメール");
-        message.setText(makeContent(setting));
+        SimpleMailMessage message = makeMessage(setting, dto);
         mailSender.send(message);
     }
 
     /**
-     * DBからメールアドレスを取得する
+     * 設定のエンティティを取得
      * @param id
      * @return メールアドレス
      */
     private UserCopilotSetting getEntity(Integer id) {
-        UserCopilotSetting ret = mapper.findById(id);
-        return ret;
+        return mapper.findById(id);
     }
 
     /**
@@ -62,17 +59,30 @@ public class MailService {
     }
 
     /**
+     * メール本体を作る
+     * @param setting 設定エンティティ
+     * @return メール
+     */
+    private SimpleMailMessage makeMessage(UserCopilotSetting setting, CopilotUsageDto dto) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(getAddress(setting));
+        message.setSubject("GitHub Copilot 利用状況");
+        message.setText(makeContent(setting, dto));
+        return message;
+    }
+
+    /**
      * メール本文をテンプレートから可変にする。
      * @return メール本文
      */
-    private String makeContent(UserCopilotSetting setting) {
+    private String makeContent(UserCopilotSetting setting, CopilotUsageDto dto) {
         
         Context context = new Context();
         context.setVariable("userName", setting.getUserName());
         context.setVariable("dateTime", LocalDateTime.now().
             format(DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss")));
-        context.setVariable("inline", "53");
-        context.setVariable("credit", "70");
+        context.setVariable("inline", dto.getInline());
+        context.setVariable("credit", dto.getCredit());
 
         return templateEngine.process("mail/template.txt", context);
     }
