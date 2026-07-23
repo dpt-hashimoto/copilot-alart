@@ -109,7 +109,7 @@
                             <executable>jlink</executable>
                             <arguments>
                                 <argument>--add-modules</argument>
-                                <argument>java.base,java.logging,java.sql,java.xml,java.naming,java.management,java.desktop,jdk.unsupported,java.security.jgss,java.instrument</argument>
+                                <argument>java.base,java.logging,java.sql,java.xml,java.naming,java.management,java.desktop,jdk.unsupported,java.security.jgss,java.instrument,java.net.http</argument>
                                 <argument>--output</argument>
                                 <argument>${project.build.directory}/runtime</argument>
                                 <argument>--compress=2</argument>

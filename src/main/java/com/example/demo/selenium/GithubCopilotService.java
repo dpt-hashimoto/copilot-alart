@@ -1,8 +1,12 @@
 package com.example.demo.selenium;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,9 +21,15 @@ public class GithubCopilotService {
      */
     public void moveCopilotSetting(WebDriver driver) {
         driver.findElement(
-            By.cssSelector("img[data-testid='github-avatar']")).click();
-        driver.findElement(
-            By.cssSelector("a[href='/settings/copilot']")).click();
+            By.cssSelector("button:has(img[data-testid='github-avatar'])")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        WebElement copilot = wait.until(
+            ExpectedConditions.elementToBeClickable(
+                By.cssSelector("a[href='/settings/copilot']")
+            )
+        );
+        copilot.click();
     }
 
     /**
