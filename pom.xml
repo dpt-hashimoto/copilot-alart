@@ -11,7 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>copilot-alart</artifactId>
 	<version>1.0.0</version>
-	<name>vulnerability-manage</name>
+	<name>copilot-alart</name>
 	<description/>
 	<url/>
 	<licenses>
