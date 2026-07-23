@@ -40,3 +40,4 @@ target/
 .classpath
 .project
 .settings/
+copilot_alart.db
