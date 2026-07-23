@@ -5,37 +5,61 @@
 
 <mapper namespace="com.example.demo.mapper.UserCopilotSettingMapper">
 
-    <select id="findAll" resultType="com.example.demo.entity.UserCopilotSetting">
-        SELECT * FROM user_copilot_setting
+    <select id="findAll"
+            resultType="com.example.demo.entity.UserCopilotSetting">
+        SELECT *
+        FROM user_copilot_setting
     </select>
 
     <select id="findById"
-        parameterType="int"
-        resultType="com.example.demo.entity.UserCopilotSetting">
-        SELECT * FROM user_copilot_setting WHERE id = #{id}
+            parameterType="int"
+            resultType="com.example.demo.entity.UserCopilotSetting">
+        SELECT *
+        FROM user_copilot_setting
+        WHERE id = #{id}
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert"
+            useGeneratedKeys="true"
+            keyProperty="id">
+
         INSERT INTO user_copilot_setting (
-            user_name, git_login_id, git_login_password, teams_workflow_url, remarks
-        ) VALUES (
-            #{userName}, #{gitLoginId}, #{gitLoginPassword}, #{teamsWorkflowUrl}, #{remarks}
+            user_name,
+            git_login_id,
+            git_login_password,
+            mail_address,
+            remarks
         )
+        VALUES (
+            #{userName},
+            #{gitLoginId},
+            #{gitLoginPassword},
+            #{mailAddress},
+            #{remarks}
+        )
+
     </insert>
 
     <update id="update">
+
         UPDATE user_copilot_setting
         SET
             user_name = #{userName},
             git_login_id = #{gitLoginId},
             git_login_password = #{gitLoginPassword},
-            teams_workflow_url = #{teamsWorkflowUrl},
-            remarks = #{remarks}
+            mail_address = #{mailAddress},
+            remarks = #{remarks},
+            updated_at = CURRENT_TIMESTAMP
         WHERE id = #{id}
+
     </update>
 
     <delete id="delete">
-        DELETE FROM user_copilot_setting WHERE id = #{id}
+
+        DELETE
+        FROM user_copilot_setting
+        WHERE id = #{id}
+
     </delete>
 
 </mapper>
