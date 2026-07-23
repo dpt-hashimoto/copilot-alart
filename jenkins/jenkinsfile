@@ -4,34 +4,48 @@ pipeline {
         maven 'Maven3.9.16'
         jdk 'java17'
     }
-
     stages {
+
         stage('Clean Workspace') {
             steps {
                 deleteDir()
             }
         }
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/dpt-hashimoto/copilot-alart.git'
+            }
+        }
+
         stage('Build') {
             steps {
-                // Get some code from a GitHub repository
-                git branch: 'main',
-                url: 'https://github.com/dpt-hashimoto/copilot-alart.git'
-
-                // Run the build on a Unix agent. You must have Maven installed.
-                // sh 'mvn -Dmaven.test.failure.ignore=true clean package'
-
-                // To run Maven on a Windows agent, use
-                bat 'mvn clean package'
                 bat 'mvn -Dmaven.test.failure.ignore=true clean package'
             }
+        }
 
-            post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
-                success {
-                    archiveArtifacts 'target/*.jar'
-                }
+        stage('Create Release') {
+            steps {
+
+                bat '''
+                if exist release rmdir /S /Q release
+
+                mkdir release
+                mkdir release\\app
+
+                xcopy /E /I /Y bin release\\bin
+                xcopy /E /I /Y runtime release\\runtime
+
+                copy target\\copilot-alart-1.0.0.jar release
+                '''
             }
+        }
+    }
+
+    post {
+        success {
+            archiveArtifacts artifacts: 'release/**', fingerprint: true
         }
     }
 }
