@@ -27,25 +27,27 @@ pipeline {
 
         stage('Create Release') {
             steps {
-
+        
                 bat '''
                 if exist release rmdir /S /Q release
-
+                if exist release.zip del /Q release.zip
+        
                 mkdir release
                 mkdir release\\app
-
+        
                 xcopy /E /I /Y bin release\\bin
-                xcopy /E /I /Y runtime release\\runtime
-
+                xcopy /E /I /Y target\\runtime release\\runtime
+        
                 copy target\\copilot-alart-1.0.0.jar release
+        
+                powershell -Command "Compress-Archive -Path release -DestinationPath release.zip -Force"
                 '''
             }
         }
     }
-
     post {
         success {
-            archiveArtifacts artifacts: 'release/**', fingerprint: true
+            archiveArtifacts artifacts: 'release/**, release.zip', fingerprint: true
         }
     }
 }

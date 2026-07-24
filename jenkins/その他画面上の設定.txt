@@ -1,0 +1,55 @@
+# General
+
+説明
+
+~~~
+Gitのリモートリポジトリ
+https://github.com/dpt-hashimoto/copilot-alart.git
+からソースをpullしてビルドする。
+~~~
+
+以下、●チェックあり、○チェックなし
+
+●：Do not allow concurrent builds
+○：Abort previous builds
+
+○：Do not allow the pipeline to resume if the controller restarts
+
+●：GitHub project
+Project url
+
+~~~
+https://github.com/dpt-hashimoto/copilot-alart.git/
+~~~
+
+○：Pipeline speed/durability override
+○：Preserve stashes from completed builds
+○：Throttle builds
+○：ビルドのパラメータ化
+●：古いビルドの破棄
+
+Strategy
+
+~~~
+Log Rotation
+~~~
+
+空欄：ビルドの保存日数
+ビルドの保存最大数
+
+~~~
+3
+~~~
+
+
+# Triggers
+
+●：GitHub hook trigger for GITScm polling
+○：SCMをポーリング
+○：他プロジェクトの後にビルド
+○定期的に実行
+○：リモートからビルド (例: スクリプトから)
+
+# パイプライン
+
+パイプラインスクリプト
