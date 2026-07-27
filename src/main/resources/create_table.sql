@@ -3,14 +3,15 @@ DROP TABLE IF EXISTS user_copilot_setting;
 
 -- GitHubとTeamsの連携設定を管理するテーブル
 CREATE TABLE user_copilot_setting (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_name TEXT NOT NULL,
-    git_login_id TEXT NOT NULL UNIQUE,
-    git_login_password TEXT NOT NULL,
-    mail_address TEXT NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_name VARCHAR(255) NOT NULL,
+    git_login_id VARCHAR(255) NOT NULL UNIQUE,
+    git_login_password VARCHAR(255) NOT NULL,
+    mail_address VARCHAR(255) NOT NULL,
     remarks TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
 );
 
 -- 初期ダミーデータの挿入
