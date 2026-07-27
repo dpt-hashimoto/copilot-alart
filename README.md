@@ -21,7 +21,7 @@
   * 生成AIに関する機能
   * 外部サイトやツールと連携させたい
 </details>
----
+
 
 ## 概要
 
@@ -34,7 +34,6 @@ Spring Bootで作成しており、
 
 の両方に対応しています。
 
----
 
 ## 制約
 * GitHubで2FA認証を設定している場合は対応しておりません。
@@ -44,11 +43,10 @@ Spring Bootで作成しており、
 
 - GitHub Copilot APIから使用量取得
 - 使用率の表示
-- HTMLメール送信
+- メール送信
 - コマンドライン実行
 - Web画面からの実行
 
----
 
 ## 使用技術
 
@@ -64,7 +62,7 @@ Spring Bootで作成しており、
 
 ## 動作環境
 
-- JDK 21
+- JDK 17
 
 ---
 
@@ -73,31 +71,15 @@ Spring Bootで作成しており、
 ### Web版
 
 ```
-http://localhost:8080
+http://localhost:28080
 ```
 
 ### CLI版
 WIP
 
-## ディレクトリ構成
-
-```
-src
- ├─controller
- ├─service
- ├─repository
- ├─config
- ├─mail
- └─templates
-```
-
----
-
 ## 今後追加予定
 
 - グラフ表示
-
----
 
 ## ライセンス
 
