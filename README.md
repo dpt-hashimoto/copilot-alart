@@ -58,13 +58,9 @@ Spring Bootで作成しており、
 - Docker
 - MailHog
 
----
-
 ## 動作環境
 
 - JDK 17
-
----
 
 ## 使い方
 
