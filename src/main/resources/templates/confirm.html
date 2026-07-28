@@ -9,6 +9,10 @@
     </head>
     <body>
         <div class="container mt-5">
+            <div class="alert alert-danger"
+                 th:if="${error}"
+                 th:text="${error}">
+            </div>
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
                     <h3 class="mb-0">設定情報</h3>

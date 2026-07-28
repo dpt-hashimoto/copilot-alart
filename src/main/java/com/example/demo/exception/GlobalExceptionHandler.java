@@ -1,24 +1,53 @@
 package com.example.demo.exception;
 
-import org.springframework.http.ResponseEntity;
+import org.mybatis.spring.MyBatisSystemException;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  * エラーハンドリングのロジッククラス
  */
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ErrorResponse> handle(BusinessException ex) {
+    /**
+     * システムエラーハンドリング
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(SystemException.class)
+    public String handle(SystemException ex, Model model) {
 
-        ErrorCode error = ex.getErrorCode();
+        model.addAttribute("message", ex.getErrorCode().getMessage());
 
-        return ResponseEntity
-                .status(error.getStatus())
-                .body(new ErrorResponse(
-                        error.name(),
-                        error.getMessage()
-                ));
+        return "error";
     }
 
+    /**
+     * DBエラーハンドリング
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(MyBatisSystemException.class)
+    public String handle(MyBatisSystemException ex, Model model) {
+
+        model.addAttribute("message", ErrorCode.SE001.getMessage());
+
+        return "error";
+    }
+
+    /**
+     * DBエラーハンドリング
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(CannotGetJdbcConnectionException.class)
+    public String handle(CannotGetJdbcConnectionException ex, Model model) {
+
+        model.addAttribute("message", ErrorCode.SE001.getMessage());
+
+        return "error";
+    }
 }

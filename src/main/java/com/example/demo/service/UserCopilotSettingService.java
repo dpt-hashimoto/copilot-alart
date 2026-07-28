@@ -1,10 +1,14 @@
 package com.example.demo.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.UserCopilotSetting;
+import com.example.demo.exception.BusinessException;
+import com.example.demo.exception.ErrorCode;
 import com.example.demo.mapper.UserCopilotSettingMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -36,16 +40,25 @@ public class UserCopilotSettingService {
 
     /**
      * 新規作成する
+     * @throws SQLException 
      */
     public void regist(UserCopilotSetting setting) {
-        mapper.insert(setting);
+        try {
+            mapper.insert(setting);
+        } catch (DuplicateKeyException e) {
+            throw new BusinessException(ErrorCode.BE002 ,e);
+        }
     }
 
     /**
      * 更新する
      */
     public void update(UserCopilotSetting setting) {
-        mapper.update(setting);
+        try {
+            mapper.update(setting);
+        } catch (DuplicateKeyException e) {
+            throw new BusinessException(ErrorCode.BE002 ,e);
+        }
     }
 
     /**

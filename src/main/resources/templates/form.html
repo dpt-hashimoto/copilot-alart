@@ -15,8 +15,17 @@
                         th:text="${setting.id == null} ? '新規登録' : '編集'">
                     </h3>
                 </div>
+
                 <div class="card-body">
                     <form th:action="@{/save}" th:object="${setting}" method="post">
+                        <div class="alert alert-danger"
+                             th:if="${#fields.hasErrors('*')}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('*')}"
+                                    th:text="${err}">
+                                </li>
+                            </ul>
+                        </div>
                         <input type="hidden" th:field="*{id}">
     
                         <div class="mb-3">

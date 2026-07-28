@@ -1,8 +1,13 @@
 package com.example.demo.selenium;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.stereotype.Service;
+
+import com.example.demo.exception.BusinessException;
+import com.example.demo.exception.ErrorCode;
+import com.example.demo.exception.SystemException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,7 +35,17 @@ public class WebScrapingService {
         try {
             openGitHub(driver);
             login.loginGitHub(driver, id);
+            
+            //ログインに失敗した場合はエラー
+            String currentUrl = driver.getCurrentUrl();
+            if (currentUrl.contains("/session")) {
+                throw new BusinessException(ErrorCode.BE003);
+            }
+
             return readUsage(driver);
+
+        } catch (WebDriverException e) {
+            throw new SystemException(ErrorCode.SE005, e);
         } finally {
             driver.quit();
         }

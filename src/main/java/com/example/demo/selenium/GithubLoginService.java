@@ -27,8 +27,8 @@ public class GithubLoginService {
     public void loginGitHub(WebDriver driver, Integer id) {
         UserCopilotSetting setting = mapper.findById(id);
         // ID・パスワードの要素取得
-        driver.findElement(By.id("login_field")).sendKeys(setting.getGitLoginId());;
+        driver.findElement(By.id("login_field")).sendKeys(setting.getGitLoginId());
         driver.findElement(By.id("password")).sendKeys(setting.getGitLoginPassword());
-        driver.findElement(By.name("commit")).click();;
+        driver.findElement(By.name("commit")).click();
     }
 }

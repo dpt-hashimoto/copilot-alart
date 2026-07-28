@@ -1,10 +1,9 @@
 package com.example.demo.exception;
 
 /**
- * 業務上のエラー（ユーザ操作の不正など）
+ * 内部のエラー
  */
-public class BusinessException extends RuntimeException {
-
+public class SystemException extends RuntimeException {
     /** エラーコード */
     private final ErrorCode errorCode;
 
@@ -14,16 +13,15 @@ public class BusinessException extends RuntimeException {
      * @param errorCode
      * @param e
      */
-    public BusinessException(ErrorCode errorCode, Throwable e) {
+    public SystemException(ErrorCode errorCode, Throwable e) {
         super(errorCode.getMessage(), e);
         this.errorCode = errorCode;
     }
 
-    public BusinessException(ErrorCode errorCode) {
+    public SystemException(ErrorCode errorCode) {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
-
     /**
      * エラーコードを取得する
      * @return エラーコード

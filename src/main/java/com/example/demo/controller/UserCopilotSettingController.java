@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.entity.UserCopilotSetting;
+import com.example.demo.exception.BusinessException;
 import com.example.demo.service.UserCopilotSettingService;
 
 import lombok.RequiredArgsConstructor;
@@ -72,13 +75,29 @@ public class UserCopilotSettingController {
      * 入力内容保存
      */
     @PostMapping("/save")
-    public String save(@ModelAttribute UserCopilotSetting setting) {
-        // IDがなければ新規、IDがあれば更新
-        if (null == setting.getId()) {
-            service.regist(setting);
-        } else {
-            service.update(setting);
+    public String save(@Validated
+        @ModelAttribute("setting") UserCopilotSetting setting,
+        BindingResult result,
+        Model model) {
+
+        if (result.hasErrors()) {
+            return "form";
         }
+
+        try {
+            // IDがなければ新規、IDがあれば更新
+            if (null == setting.getId()) {
+                service.regist(setting);
+            } else {
+                service.update(setting);
+            }
+        } catch (BusinessException e) {
+            result.reject(
+                e.getErrorCode().name(),
+                e.getErrorCode().getMessage());
+            return "form";
+        }
+
         return "redirect:setting";
     }
 

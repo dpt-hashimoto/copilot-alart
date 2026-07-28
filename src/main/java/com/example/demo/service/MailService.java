@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,8 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import com.example.demo.entity.UserCopilotSetting;
+import com.example.demo.exception.BusinessException;
+import com.example.demo.exception.ErrorCode;
 import com.example.demo.mapper.UserCopilotSettingMapper;
 import com.example.demo.selenium.CopilotUsageDto;
 
@@ -36,7 +39,12 @@ public class MailService {
     public void sendMail(Integer id, CopilotUsageDto dto) {
         UserCopilotSetting setting = getEntity(id);
         SimpleMailMessage message = makeMessage(setting, dto);
-        mailSender.send(message);
+        try {
+            mailSender.send(message);
+        } catch (MailException e) {
+            throw new BusinessException(ErrorCode.SE006, e);
+        }
+        
     }
 
     /**
