@@ -9,8 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CopilotAlart {
 
 	public static void main(String[] args) {
-	    System.out.println("Current Directory = " + System.getProperty("user.dir"));
-		SpringApplication.run(CopilotAlart.class, args);
+	    SpringApplication application = new SpringApplication(CopilotAlart.class);
+	    application.addListeners(new org.springframework.boot.context.ApplicationPidFileWriter("bin/pid.txt"));
+	    application.run(args);
 	}
 
 }
