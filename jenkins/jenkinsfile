@@ -29,27 +29,24 @@ pipeline {
             steps {
         
                 bat '''
-                if exist release rmdir /S /Q release
+                if exist copilot-alart rmdir /S /Q copilot-alart
                 if exist copilot-alart.zip del /Q copilot-alart.zip
         
-                mkdir release
+                mkdir copilot-alart
         
-                xcopy /E /I /Y bin release\\bin
-                xcopy /E /I /Y target\\runtime release\\runtime
-                xcopy /E /I /Y config release\\config
-                xcopy /E /I /Y db release\\db
+                xcopy /E /I /Y release copilot-alart\\
+                xcopy /E /I /Y target\\runtime copilot-alart\\runtime
         
-                copy target\\copilot-alart-1.0.0.jar release
-                copy docker-compose.yml release
+                copy target\\copilot-alart-1.0.0.jar copilot-alart
         
-                powershell -Command "Compress-Archive -Path release\\* -DestinationPath copilot-alart.zip -Force"
+                powershell -Command "Compress-Archive -Path copilot-alart\\* -DestinationPath copilot-alart.zip -Force"
                 '''
             }
         }
     }
     post {
         success {
-            archiveArtifacts artifacts: 'release/**, copilot-alart.zip', fingerprint: true
+            archiveArtifacts artifacts: 'copilot-alart/**, copilot-alart.zip', fingerprint: true
         }
     }
 }
