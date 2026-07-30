@@ -1,8 +1,61 @@
 @echo off
+setlocal EnableDelayedExpansion
 
-REM è£½å“ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¸ç§»å‹•
+REM »•iƒfƒBƒŒƒNƒgƒŠ‚ÉˆÚ“®
 cd /d "%~dp0.."
 
-runtime\bin\javaw.exe -jar copilot-alart-1.0.0.jar
+REM Java‚ð‹N“®‚µ‚ÄPID‚ðŽæ“¾
+for /f %%i in ('
+powershell -NoProfile -Command "$p = Start-Process 'runtime\bin\javaw.exe' -ArgumentList '-jar','copilot-alart-1.0.0.jar' -PassThru; $p.Id"') do (
+    set TARGET_PID=%%i
+)
 
-pause
+REM PIDŽæ“¾Šm”F
+if not defined TARGET_PID (
+    echo ƒGƒ‰[: JavaƒvƒƒZƒX‚ð‹N“®‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B
+    pause
+    exit /b 1
+)
+
+echo %TARGET_PID%>pid.txt
+
+echo ‹N“®’†... (PID=%TARGET_PID%)
+
+set COUNT=0
+set MAX_WAIT=30
+
+:LOOP
+
+REM ƒvƒƒZƒX‚ª‘¶Ý‚·‚é‚©Šm”F
+tasklist /FI "PID eq %TARGET_PID%" | findstr /C:"%TARGET_PID%" >nul
+if errorlevel 1 (
+    echo.
+    echo ƒGƒ‰[: ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ª‹N“®“r’†‚ÅI—¹‚µ‚Ü‚µ‚½B
+    del pid.txt >nul 2>&1
+    pause
+    exit /b 1
+)
+
+REM HTTP‰ž“šŠm”F
+powershell -NoProfile -Command ^
+"try { Invoke-WebRequest 'http://localhost:28080' -UseBasicParsing > $null; exit 0 } catch { exit 1 }"
+
+if not errorlevel 1 (
+    echo.
+    echo ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ª³í‚É‹N“®‚µ‚Ü‚µ‚½B
+    pause
+    exit /b 0
+)
+
+set /a COUNT+=1
+
+if !COUNT! GEQ !MAX_WAIT! (
+    echo.
+    echo ƒGƒ‰[: !MAX_WAIT!•bˆÈ“à‚É‹N“®‚µ‚Ü‚¹‚ñ‚Å‚µ‚½B
+    echo ƒvƒƒZƒX^(PID=%TARGET_PID%^)‚ÍŽÀs’†‚Å‚·‚ªAHTTP‰ž“š‚ª‚ ‚è‚Ü‚¹‚ñB
+    pause
+    exit /b 1
+)
+
+timeout /t 1 >nul
+goto LOOP
