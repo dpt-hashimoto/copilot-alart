@@ -9,9 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CopilotAlart {
 
 	public static void main(String[] args) {
-	    SpringApplication application = new SpringApplication(CopilotAlart.class);
-	    application.addListeners(new org.springframework.boot.context.ApplicationPidFileWriter("bin/pid.txt"));
-	    application.run(args);
+	    SpringApplication.run(CopilotAlart.class);
 	}
 
 }
