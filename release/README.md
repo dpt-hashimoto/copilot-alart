@@ -24,7 +24,7 @@ Spring Bootで作成しており、
 
 ## 主な機能
 
-- GitHub Copilot APIから使用量取得
+- GitHub Copilot 設定画面から使用量取得
 - 使用率の表示
 - メール送信
 - Web画面からの実行
