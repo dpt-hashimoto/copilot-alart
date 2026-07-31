@@ -17,7 +17,7 @@ if not defined TARGET_PID (
     exit /b 1
 )
 
-echo %TARGET_PID%>pid.txt
+echo %TARGET_PID%>bin\pid.txt
 
 echo ‹N“®’†... (PID=%TARGET_PID%)
 
